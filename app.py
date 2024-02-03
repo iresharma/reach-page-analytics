@@ -55,8 +55,8 @@ def get_unique_views():
         unique_views -> <number>
     """
     page_id = request.headers.get('page-route')
-    print(page_id)
-    return calculate_unique_views(page_id)
+    time_delta = request.args.get('time-delta')
+    return calculate_unique_views(page_id, time_delta)
 
 @app.route('/clicks/unique')
 def get_unique_clicks():
@@ -66,9 +66,9 @@ def get_unique_clicks():
     :return:
         unique_views -> <number>
     """
-    page_id = request.args.get('page')
-    link_id = request.args.get('link')
-    return calculate_unique_clicks(page_id, link_id)
+    page_id = request.args.get('page-route')
+    time_delta = request.args.get('time-delta')
+    return calculate_unique_clicks(page_id, time_delta)
 
 @app.route('/ctr')
 def get_ctr():
@@ -78,8 +78,9 @@ def get_ctr():
     :return:
     ctr -> <number>
     """
-    page_id = request.args.get('page')
-    return calculate_ctr(page_id)
+    page_route = request.args.get('page-route')
+    time_delta = request.args.get('time-delta')
+    return calculate_ctr(page_route, time_delta)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', port=4050, debug=True)
