@@ -9,7 +9,7 @@ from database.db_utils import get_time_delta
 uri = environ.get('MONGO_URI')
 
 # Create a new client and connect to the server
-client = MongoClient(uri, server_api=ServerApi('1'), tls=True, tlsCAFile=where())
+client = MongoClient(uri, server_api=ServerApi('1'), tls=True, tlsCAFile=where(), tlsAllowInvalidCertificates=True)
 DB = client['reach-page-analytics']
 
 

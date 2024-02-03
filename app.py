@@ -1,11 +1,14 @@
 from flask import Flask, request
 from dotenv import load_dotenv
+from flask_cors import CORS
+
 from utils import get_ip_info
 from database import add_view, add_click, calculate_unique_views, calculate_unique_clicks, calculate_ctr
 
 load_dotenv()
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/')
 def hello_world():  # put application's code here

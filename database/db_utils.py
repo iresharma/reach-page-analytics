@@ -1,6 +1,9 @@
 from datetime import datetime, timedelta
 
-def get_time_delta(time_delta: str) -> tuple[float, float]:
+from typing import Tuple
+
+
+def get_time_delta(time_delta: str) -> Tuple[float, float]:
     now = datetime.now()
     if time_delta == "YEAR":
         end = now - timedelta(days=365)
