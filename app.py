@@ -69,7 +69,7 @@ def get_unique_clicks():
     :return:
         unique_views -> <number>
     """
-    page_id = request.args.get('page-route')
+    page_id = request.args.get('page')
     time_delta = request.args.get('time-delta')
     return calculate_unique_clicks(page_id, time_delta)
 

@@ -6,10 +6,10 @@ from certifi import where
 
 from database.db_utils import get_time_delta
 
-uri = environ.get('MONGO_URI')
+uri = "mongodb://mongo:vqEECXvPFteCwQlMPSBxrQBaTtNAMOHH@roundhouse.proxy.rlwy.net:12849"
 
 # Create a new client and connect to the server
-client = MongoClient(uri, server_api=ServerApi('1'), tls=True, tlsCAFile=where(), tlsAllowInvalidCertificates=True)
+client = MongoClient(uri, server_api=ServerApi('1'), ssl=False)
 DB = client['reach-page-analytics']
 
 
@@ -75,7 +75,6 @@ def calculate_unique_views(page: str, timeDelta: str):
 def calculate_unique_clicks(page: str, time_delta: str):
     clicks_col = DB.clicks
     start, end = get_time_delta(time_delta)
-    print(start, end)
     vals = clicks_col.aggregate([
         {
             '$match': {
@@ -94,14 +93,15 @@ def calculate_unique_clicks(page: str, time_delta: str):
             }
         }, {
             '$group': {
-                '_id': None,
-                'total_count': {
+                '_id': page,
+                'unique_count': {
                     '$sum': '$count'
                 }
             }
         }
     ])
-    return list(vals)[0], 200
+    result = list(vals)
+    return result[0], 200
 
 
 def calculate_ctr(page_id: str, time_delta: str):
